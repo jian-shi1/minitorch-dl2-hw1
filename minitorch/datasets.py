@@ -21,6 +21,7 @@ class Graph:
 
 
 def simple(N: int) -> Graph:
+    """Sample N points in [0, 1)^2; label 1 when x_1 < 0.5, else 0."""
     X = make_pts(N)
     y = []
     for x_1, x_2 in X:
@@ -30,6 +31,7 @@ def simple(N: int) -> Graph:
 
 
 def diag(N: int) -> Graph:
+    """Sample N points in [0, 1)^2; label 1 when x_1 + x_2 < 0.5, else 0."""
     X = make_pts(N)
     y = []
     for x_1, x_2 in X:
@@ -39,6 +41,10 @@ def diag(N: int) -> Graph:
 
 
 def split(N: int) -> Graph:
+    """
+    Label 1 in the strips x_1 < 0.2 or x_1 > 0.8.
+    Central strip - 0
+    """
     X = make_pts(N)
     y = []
     for x_1, x_2 in X:
@@ -48,6 +54,10 @@ def split(N: int) -> Graph:
 
 
 def xor(N: int) -> Graph:
+    """
+    Points in [0, 1)^2, label 1 when one coordinate is strictly below 0.5 and 
+    the other is strictly above 0.5. All other points 0
+    """
     X = make_pts(N)
     y = []
     for x_1, x_2 in X:
@@ -57,6 +67,10 @@ def xor(N: int) -> Graph:
 
 
 def circle(N: int) -> Graph:
+    """
+    N points uniform in [0, 1)^2, label 1 outside the circle centered at (0.5, 0.5)
+    Sq distance greater than 0.1 gives label 1; points inside - 0.
+    """
     X = make_pts(N)
     y = []
     for x_1, x_2 in X:
@@ -67,6 +81,9 @@ def circle(N: int) -> Graph:
 
 
 def spiral(N: int) -> Graph:
+    """
+    Two spirals with labels 0 and 1.
+    """
     def x(t: float) -> float:
         return t * math.cos(t) / 20.0
 
