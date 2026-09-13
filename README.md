@@ -22,4 +22,36 @@ LR: 0.05
 
 Epochs: 500
 
-![Simple classification](pic0_5.jpg)
+![Simple classification](hw_output/pic0_5.jpg)
+
+## Task 1.5
+
+Everywhere lr=0.05, 50 points, 500 epochs, size of hidden layer = 10
+
+### simple
+![final](hw_output/1_5_simple_final.png)
+
+![plot](hw_output/1_5_simple_plot.png)
+
+[Logs](hw_output/1_5_simple.logs)
+
+### diag
+![final](hw_output/1_5_diag_final.png)
+
+![plot](hw_output/1_5_diag_plot.png)
+
+[Logs](hw_output/1_5_diag.logs)
+
+### xor
+![final](hw_output/1_5_xor_final.png)
+
+![plot](hw_output/1_5_xor_plot.png)
+
+[Logs](hw_output/1_5_xor.logs)
+
+### circle
+![final](hw_output/1_5_circle_final.png)
+
+![plot](hw_output/1_5_circle_plot.png)
+
+[Logs](hw_output/1_5_circle.logs)
