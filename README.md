@@ -55,3 +55,43 @@ Everywhere lr=0.05, 50 points, 500 epochs, size of hidden layer = 10
 ![plot](hw_output/1_5_circle_plot.png)
 
 [Logs](hw_output/1_5_circle.logs)
+
+## Task 2.5
+lr=0.1, 30 points
+
+
+### simple
+500 epochs, hidden layer size = 5, train time 56.5s
+
+![final](hw_output/2_5_simple_final.png)
+
+![plot](hw_output/2_5_simple_plot.png)
+
+[Logs](hw_output/2_5_simple.logs)
+
+### diag
+600 epochs, hidden layer size = 8, train time 133.8s
+
+![final](hw_output/2_5_diag_final.png)
+
+![plot](hw_output/2_5_diag_plot.png)
+
+[Logs](hw_output/2_5_diag.logs)
+
+### xor
+600 epochs, hidden layer size = 8, train time 134.4s
+
+![final](hw_output/2_5_xor_final.png)
+
+![plot](hw_output/2_5_xor_plot.png)
+
+[Logs](hw_output/2_5_xor.logs)
+
+### circle
+800 epochs, hidden layer size = 8, train time 180s
+
+![final](hw_output/2_5_circle_final.png)
+
+![plot](hw_output/2_5_circle_plot.png)
+
+[Logs](hw_output/2_5_circle.logs)
