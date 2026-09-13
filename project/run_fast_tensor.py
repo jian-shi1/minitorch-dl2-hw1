@@ -1,4 +1,5 @@
 import random
+import time
 
 import numba
 
@@ -70,6 +71,7 @@ class FastTrain:
         optim = minitorch.SGD(self.model.parameters(), learning_rate)
         BATCH = 10
         losses = []
+        start_time = time.perf_counter()
 
         for epoch in range(max_epochs):
             total_loss = 0.0
@@ -95,13 +97,15 @@ class FastTrain:
 
             losses.append(total_loss)
             # Logging
-            if epoch % 10 == 0 or epoch == max_epochs:
+            if epoch % 10 == 0 or epoch == max_epochs - 1:
                 X = minitorch.tensor(data.X, backend=self.backend)
                 y = minitorch.tensor(data.y, backend=self.backend)
                 out = self.model.forward(X).view(y.shape[0])
-                y2 = minitorch.tensor(data.y)
+                y2 = minitorch.tensor(data.y, backend=self.backend)
                 correct = int(((out.detach() > 0.5) == y2).sum()[0])
                 log_fn(epoch, total_loss, correct, losses)
+                elapsed = time.perf_counter() - start_time
+                print(f"Time per epoch: {elapsed / (epoch + 1):.4f}s")
 
 
 if __name__ == "__main__":
@@ -111,6 +115,7 @@ if __name__ == "__main__":
     parser.add_argument("--PTS", type=int, default=50, help="number of points")
     parser.add_argument("--HIDDEN", type=int, default=10, help="number of hiddens")
     parser.add_argument("--RATE", type=float, default=0.05, help="learning rate")
+    parser.add_argument("--EPOCHS", type=int, default=500, help="training epochs")
     parser.add_argument("--BACKEND", default="cpu", help="backend mode")
     parser.add_argument("--DATASET", default="simple", help="dataset")
     parser.add_argument("--PLOT", default=False, help="dataset")
@@ -119,16 +124,17 @@ if __name__ == "__main__":
 
     PTS = args.PTS
 
-    if args.DATASET == "xor":
-        data = minitorch.datasets["Xor"](PTS)
-    elif args.DATASET == "simple":
-        data = minitorch.datasets["Simple"].simple(PTS)
-    elif args.DATASET == "split":
-        data = minitorch.datasets["Split"](PTS)
+    dataset_names = {name.lower(): name for name in minitorch.datasets}
+    if args.DATASET.lower() not in dataset_names:
+        parser.error(
+            f"unknown dataset {args.DATASET!r}; choose from "
+            + ", ".join(sorted(dataset_names))
+        )
+    data = minitorch.datasets[dataset_names[args.DATASET.lower()]](PTS)
 
     HIDDEN = int(args.HIDDEN)
     RATE = args.RATE
 
     FastTrain(
         HIDDEN, backend=FastTensorBackend if args.BACKEND != "gpu" else GPUBackend
-    ).train(data, RATE)
+    ).train(data, RATE, max_epochs=args.EPOCHS)

@@ -62,7 +62,11 @@ def sigmoid(x: float) -> float:
 
     for stability.
     """
-    return 1.0 / (1.0 + exp(-x)) if x >= 0 else exp(x) / (1.0 + exp(x))
+    return (
+        1.0 / (1.0 + math.exp(-x))
+        if x >= 0
+        else math.exp(x) / (1.0 + math.exp(x))
+    )
 
 
 def relu(x: float) -> float:
@@ -71,7 +75,7 @@ def relu(x: float) -> float:
 
     (See https://en.wikipedia.org/wiki/Rectifier_(neural_networks) .)
     """
-    return x if lt(0, x) else 0
+    return x if x > 0 else 0.0
 
 
 EPS = 1e-6
@@ -99,12 +103,12 @@ def inv(x: float) -> float:
 
 def inv_back(x: float, d: float) -> float:
     r"If $f(x) = 1/x$ compute $d \times f'(x)$"
-    return mul(neg(d), 1.0 / x**2)
+    return -d / x**2
 
 
 def relu_back(x: float, d: float) -> float:
     r"If $f = relu$ compute $d \times f'(x)$"
-    return mul(d, lt(0, x))
+    return d if x > 0 else 0.0
 
 
 # ## Task 0.3
